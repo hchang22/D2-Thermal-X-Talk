@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy import stats
 
 
@@ -211,4 +212,16 @@ if __name__ == '__main__':
 
     df_lr.to_csv(path + 'Summary - linear regression.csv', index=False, header=True)
     df_ta.to_csv(path + 'Summary - time average.csv', index=False, header=True)
-    df_xt.to_csv(path + 'Summary - cross talk.csv', index=False, header=True)
+    df_xt.to_csv(path + 'Summary - center wavelength.csv', index=False, header=True)
+
+    sns.stripplot(x='Text', y='x_talk', data=df_xt, jitter=True, hue='Serial Number', palette='Set1')
+    plt.axhline(y=1, linewidth=1, ls='--', color='r')
+    plt.axhline(y=-1, linewidth=1, ls='--', color='r')
+    plt.xlabel('External Temperature (C)')
+    plt.ylabel('Cross-Talk (C/A)')
+    plt.legend(fontsize='small', bbox_to_anchor=(1, 1), loc='upper left', ncol=1)
+    plt.title('Cross Talk')
+    plt.tight_layout()
+    plt.grid()
+    plt.savefig(path + 'Summary - x-talk.png')
+    plt.close()
